@@ -15,7 +15,7 @@ steps:
 
   # Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA']
+    args: ['push', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app']
 
   # Deploy to Cloud Run (optional)
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -32,5 +32,6 @@ steps:
 
 images:
   - 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app'
+
 options:
   logging: CLOUD_LOGGING_ONLY
