@@ -7,7 +7,7 @@ steps:
 # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-          'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA', '.']
+          'my-go-app:$SHORT_SHA', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['tag', 'my-go-app', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA']
@@ -32,8 +32,6 @@ steps:
       - 'asia-southeast1' # Specify your desired region
       - '--platform'
       - 'managed'
-
-images:
-  - 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app'
+      
 options:
   logging: CLOUD_LOGGING_ONLY
