@@ -5,7 +5,7 @@ steps:
     env: ['PROJECT_ROOT=hello']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/my-go-app:$SHORT_SHA', '.']
+    args: ['build', '-t', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/my-go-app:$SHORT_SHA', '-f', Dockerfile, '.']
 
   # Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
