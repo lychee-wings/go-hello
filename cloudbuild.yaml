@@ -19,6 +19,9 @@ steps:
   #  List Docker images (optional)
   - name: 'gcr.io/cloud-builders/docker'
     args: ['image', 'ls']
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['run', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:newtag']
 
   # Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
