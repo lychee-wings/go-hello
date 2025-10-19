@@ -11,7 +11,7 @@ steps:
 # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-          'asia-southeast1-docker.pkg.dev/$PROJECT_ID/$_AR_REPO_NAME/go-app-quick-test:$SHORT_SHA', '.']
+          'asia-southeast1-docker.pkg.dev/$PROJECT_ID/$_AR_REPO_NAME/my-app:$SHORT_SHA', '.']
 
   # Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
@@ -24,13 +24,13 @@ steps:
       - 'deploy'
       - 'go-lang-quick-app' # Name of your Cloud Run service
       - '--image'
-      - 'gcr.io/$PROJECT_ID/go-app-quick-test:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/my-app:$COMMIT_SHA'
       - '--region'
-      - 'us-central1' # Specify your desired region
+      - 'asia-southeast1' # Specify your desired region
       - '--platform'
       - 'managed'
 
 images:
-  - 'gcr.io/$PROJECT_ID/go-app-quick-test:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/my-app:$COMMIT_SHA'
 options:
   logging: CLOUD_LOGGING_ONLY
