@@ -7,9 +7,20 @@ steps:
 # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-          'asia-southeast1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/my-go-app:$SHORT_SHA', '.']
+          'my-go-app-local', '.']
 
   # List Docker images (optional)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['image', 'list']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'tag',
+      'my-go-app-local', # This is the locally built image name
+      'asia-southeast1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/my-go-app:$SHORT_SHA' # Full Artifact Registry path
+    ]
+
+      # List Docker images (optional)
   - name: 'gcr.io/cloud-builders/docker'
     args: ['image', 'list']
 
