@@ -1,7 +1,8 @@
 steps:
   # Build the Go binary
   - name: 'gcr.io/cloud-builders/go'
-    args: ['build', '-o', 'my-app', '.'] # Builds the binary named 'my-app'
+    args: ['install', '.']
+    dir: 'examples/hello_world'
 
   # Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
