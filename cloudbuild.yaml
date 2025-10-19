@@ -5,7 +5,7 @@ steps:
     env: ['PROJECT_ROOT=hello']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA', '-f', Dockerfile, '.']
+    args: ['buildx', 'build', '-t', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA', '-f', Dockerfile, '.']
 
   #  List Docker images (optional)
   - name: 'gcr.io/cloud-builders/docker'
