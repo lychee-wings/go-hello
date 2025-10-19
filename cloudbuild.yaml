@@ -1,6 +1,6 @@
 steps:
   # Build the Go binary
-  - name: golang:1.24
+  - name: 'gcr.io/cloud-builders/go'
     entrypoint: /bin/bash
     args: 
       - -c
@@ -11,11 +11,11 @@ steps:
 # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-          'asia-southeast1-docker.pkg.dev/$PROJECT_ID/$_AR_REPO_NAME/my-app:$SHORT_SHA', '.']
+          'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA', '.']
 
   # Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/my-app:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/my-go-app:$COMMIT_SHA']
 
   # Deploy to Cloud Run (optional)
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -24,13 +24,13 @@ steps:
       - 'deploy'
       - 'go-lang-quick-app' # Name of your Cloud Run service
       - '--image'
-      - 'gcr.io/$PROJECT_ID/my-app:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/my-go-app:$COMMIT_SHA'
       - '--region'
       - 'asia-southeast1' # Specify your desired region
       - '--platform'
       - 'managed'
 
 images:
-  - 'gcr.io/$PROJECT_ID/my-app:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/my-go-app:$COMMIT_SHA'
 options:
   logging: CLOUD_LOGGING_ONLY
