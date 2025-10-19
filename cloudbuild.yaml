@@ -10,7 +10,7 @@ steps:
           'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['tag', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA']
+    args: ['tag', 'my-go-app', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA']
   
   # List Docker images (optional)
   - name: 'gcr.io/cloud-builders/docker'
