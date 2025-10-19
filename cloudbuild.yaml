@@ -8,9 +8,10 @@ steps:
         go install github.com/jstemmer/go-junit-report/v2@latest
         2>&1 go test -timeout 1m -v ./... | /go/bin/go-junit-report -set-exit-code -iocopy -out ${SHORT_SHA}_test_log.xml
 
-  # Build the Docker image
+# Docker Build
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/my-app:$COMMIT_SHA', '.'] # Tags with commit SHA
+    args: ['build', '-t', 
+          'us-central1-docker.pkg.dev/$PROJECT_ID/$_AR_REPO_NAME/go-app-quick-test:$SHORT_SHA', '.']
 
   # Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
@@ -23,13 +24,13 @@ steps:
       - 'deploy'
       - 'go-lang-quick-app' # Name of your Cloud Run service
       - '--image'
-      - 'gcr.io/$PROJECT_ID/my-app:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/go-app-quick-test:$COMMIT_SHA'
       - '--region'
       - 'us-central1' # Specify your desired region
       - '--platform'
       - 'managed'
 
 images:
-  - 'gcr.io/$PROJECT_ID/my-app:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/go-app-quick-test:$COMMIT_SHA'
 options:
   logging: CLOUD_LOGGING_ONLY
