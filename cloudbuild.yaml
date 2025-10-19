@@ -7,17 +7,22 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['buildx', 'build', '-t', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA', '-f', Dockerfile, '.']
 
-  #  List Docker images (optional)
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['image', 'ls']
-
   # List Docker images (optional)
   - name: 'gcr.io/cloud-builders/docker'
     args: ['images', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA']
 
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag',
+      'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA',
+      'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:newtag']
+
+  #  List Docker images (optional)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['image', 'ls']
+
   # Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['image', 'push', '--all-tags', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app']
+    args: ['image', 'push', '--all-tags', 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:newtag']
 
   # Deploy to Cloud Run (optional)
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -26,12 +31,12 @@ steps:
       - 'deploy'
       - 'go-lang-quick-app' # Name of your Cloud Run service
       - '--image'
-      - 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA'
+      - 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:newtag'
       - '--region'
       - 'asia-southeast1' # Specify your desired region
       - '--platform'
       - 'managed'
 images:
-  - 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:$SHORT_SHA'
+  - 'asia-southeast1-docker.pkg.dev/$PROJECT_ID/my-go-app:newtag'
 options:
   logging: CLOUD_LOGGING_ONLY
